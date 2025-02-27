@@ -44,7 +44,7 @@ async def websocket_endpoint(websocket: WebSocket):
     for tool in TOOLS:
         print(tool.name)
 
-    
+
     agent = OpenAIVoiceReactAgent(
         model="gpt-4o-realtime-preview",
         tools=TOOLS,
@@ -53,7 +53,6 @@ async def websocket_endpoint(websocket: WebSocket):
     )
 
     await agent.aconnect(browser_receive_stream, websocket.send_text)
-
 
 async def homepage(request):
     with open("server/src/server/static/index.html") as f:
@@ -67,4 +66,8 @@ app = Starlette(debug=True, routes=routes)
 app.mount("/", StaticFiles(directory="server/src/server/static"), name="static")
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=3000)
+    uvicorn.run(
+        app, 
+        host="localhost", 
+        port=3000
+)
